@@ -1,6 +1,7 @@
 # RNAscopeQuantMouseBladder
 
 RNAscope quantification macros code in ImageJ explanation. HAA edited 7.15.25
+
 Step 1 — Select input images
 •	When the macro runs, pop-up dialogs prompt you to select your DAPI, GREEN, CYAN, and MAGENTA channel images (one file each).
 Step 2 — Preprocess each channel
