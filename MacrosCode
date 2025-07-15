@@ -80,8 +80,8 @@ selectWindow("Magenta_16bit");
 run("8-bit");
 rename("Magenta_8bit");
 selectWindow("Magenta_8bit");
-run("Subtract Background...", "rolling=100");
-setThreshold(185, 255); 
+run("Subtract Background...", "rolling=25");
+setThreshold(145, 255); 
 run("Apply LUT");
 rename("Magenta_Thresholded");
 selectWindow("Magenta_Thresholded");
@@ -128,7 +128,7 @@ run("RGB Color");
 //------------------------------------
 selectWindow("Magenta_Main");
 run("Analyze Particles...",
-  "size=4-Infinity circularity=0.00-1.00 show=Overlay display include summarize overlay");
+  "size=2-25 circularity=0.00-1.00 show=Overlay display include summarize overlay include");
   
 selectWindow("Magenta_Main");
 run("Convert to Mask");
@@ -136,7 +136,7 @@ rename("Magenta_Mask");
 
 selectWindow("Magenta_Mask");
 run("Analyze Particles...",
-  "size=4-Infinity circularity=0.00-1.00 show=Overlay Masks display include summarize overlay");
+  "size=2-25 circularity=0.00-1.00 show=Overlay display include summarize overlay include");
   
   
 selectWindow("Magenta_Mask");
