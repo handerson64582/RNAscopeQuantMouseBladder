@@ -1,0 +1,148 @@
+// RNAscope Analyze Particles Macro — final version with automatic subfolders
+// Safe naming, RGB saves, and one-time output folder selection
+
+
+//------------------------------------
+// 1. Select input images
+//------------------------------------
+dapiPath = File.openDialog("Select DAPI image");
+greenPath = File.openDialog("Select GREEN channel image");
+cyanPath = File.openDialog("Select CYAN channel image");
+magentaPath = File.openDialog("Select MAGENTA channel image");
+//------------------------------------
+// 3. Preprocess each image
+//------------------------------------
+
+// DAPI
+open(dapiPath);
+rename("DAPI_Original");
+run("RGB Color");
+rename("DAPI_RGB");
+selectWindow("DAPI_RGB");
+run("16-bit"); //16-bit first preserves dynamic range
+rename("DAPI_16bit");
+selectWindow("DAPI_16bit");
+run("8-bit"); //8-bit allows for thresholding
+rename("DAPI_8bit");
+selectWindow("DAPI_8bit");
+run("Duplicate...", "title=DAPI_Main");
+selectWindow("DAPI_8bit");
+setThreshold(80, 255); 
+run("Apply LUT");
+rename("DAPI_Thresholded");
+selectWindow("DAPI_Thresholded");
+run("Duplicate...", "title=DAPI_Main");
+
+// GREEN
+open(greenPath);
+rename("Green_Original");
+run("RGB Color");
+rename("Green_RGB");
+selectWindow("Green_RGB");
+run("16-bit");
+rename("Green_16bit");
+selectWindow("Green_16bit");
+run("8-bit");
+rename("Green_8bit");
+selectWindow("Green_8bit");
+setThreshold(60, 255); 
+run("Apply LUT");
+rename("Green_Thresholded");
+selectWindow("Green_Thresholded");
+run("Duplicate...", "title=Green_Main");
+
+// CYAN
+open(cyanPath);
+rename("Cyan_Original");
+run("RGB Color");
+rename("Cyan_RGB");
+selectWindow("Cyan_RGB");
+run("16-bit");
+rename("Cyan_16bit");
+selectWindow("Cyan_16bit");
+run("8-bit");
+rename("Cyan_8bit");
+selectWindow("Cyan_8bit");
+setThreshold(60, 255); 
+run("Apply LUT");
+rename("Cyan_Thresholded");
+selectWindow("Cyan_Thresholded");
+run("Duplicate...", "title=Cyan_Main");
+
+// MAGENTA
+open(magentaPath);
+rename("Magenta_Original");
+run("RGB Color");
+rename("Magenta_RGB");
+run("16-bit");
+rename("Magenta_16bit");
+selectWindow("Magenta_16bit");
+run("8-bit");
+rename("Magenta_8bit");
+selectWindow("Magenta_8bit");
+run("Subtract Background...", "rolling=100");
+setThreshold(185, 255); 
+run("Apply LUT");
+rename("Magenta_Thresholded");
+selectWindow("Magenta_Thresholded");
+run("Duplicate...", "title=Magenta_Main");
+
+//------------------------------------
+// 4. Merge channels and save overlays
+//------------------------------------
+
+// All channels
+run("Merge Channels...", "c2=Green_Main c3=DAPI_Main c5=Cyan_Main c6=Magenta_Main create keep");
+rename("Overlay_All_Channels");
+selectWindow("Overlay_All_Channels");
+run("RGB Color");
+
+
+// DAPI + Green
+run("Merge Channels...", "c2=Green_Main c3=DAPI_Main create keep");
+rename("Overlay_DAPI_Green");
+selectWindow("Overlay_DAPI_Green");
+run("RGB Color");
+
+
+// DAPI + Magenta
+run("Merge Channels...", "c3=DAPI_Main c6=Magenta_Main create keep");
+rename("Overlay_DAPI_Magenta");
+selectWindow("Overlay_DAPI_Magenta");
+run("RGB Color");
+
+// DAPI + Cyan
+run("Merge Channels...", "c3=DAPI_Main c5=Cyan_Main create keep");
+rename("Overlay_DAPI_Cyan");
+selectWindow("Overlay_DAPI_Cyan");
+run("RGB Color");
+
+
+// DAPI grayscale
+selectWindow("DAPI_Main");
+run("RGB Color");
+
+
+//------------------------------------
+// 5. Analyze particles and save flattened mask overlay
+//------------------------------------
+selectWindow("Magenta_Main");
+run("Analyze Particles...",
+  "size=4-Infinity circularity=0.00-1.00 show=Overlay display include summarize overlay");
+  
+selectWindow("Magenta_Main");
+run("Convert to Mask");
+rename("Magenta_Mask");
+
+selectWindow("Magenta_Mask");
+run("Analyze Particles...",
+  "size=4-Infinity circularity=0.00-1.00 show=Overlay Masks display include summarize overlay");
+  
+  
+selectWindow("Magenta_Mask");
+run("Overlay Options...", "stroke=white fill=none drawLabels");
+run("Flatten");
+rename("Magenta_Mask_Flattened");
+selectWindow("Magenta_Mask_Flattened");
+run("RGB Color");
+
