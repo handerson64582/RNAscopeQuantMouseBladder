@@ -16,7 +16,7 @@ Step 2 — Preprocess each channel
 o	DAPI: 80–255
 o	Green: 60–255
 o	Cyan: 60–255
-o	Magenta: 185–255, with background subtraction (Subtract Background... rolling=100) before thresholding. (Background subtraction used for probe of interest due to high autofluorescence in bladder tissue)
+o	Magenta: 145–255, with background subtraction (Subtract Background... rolling=25) before thresholding. (Background subtraction used for probe of interest due to high autofluorescence in bladder tissue)
 •	Apply LUT to make threshold visible.
 •	Duplicate the thresholded result as Channel_Main for merging later.
 Step 3 — Merge channels and create overlays
@@ -28,7 +28,7 @@ Step 3 — Merge channels and create overlays
 Step 4 — Analyze particles for Magenta channel
 •	Select Magenta_Main.
 •	Run Analyze Particles:
-•	Size: 4–Infinity pixels²
+•	Size: 2-25 pixels²
 •	Circularity: 0–1
 •	Show: Overlay
 •	Display results, summarize, include overlay.
