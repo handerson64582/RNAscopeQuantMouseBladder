@@ -14,7 +14,7 @@ Step 2 — Preprocess each channel
 •	For DAPI only: duplicate the 8-bit version as DAPI_Main first.
 •	Threshold the image:
 o	DAPI: 80–255
-o	Green: 60–255
+o	Green: 95–255
 o	Cyan: 60–255
 o	Magenta: 145–255, with background subtraction (Subtract Background... rolling=25) before thresholding. (Background subtraction used for probe of interest due to high autofluorescence in bladder tissue)
 •	Apply LUT to make threshold visible.
