@@ -45,7 +45,7 @@ selectWindow("Green_16bit");
 run("8-bit");
 rename("Green_8bit");
 selectWindow("Green_8bit");
-setThreshold(60, 255); 
+setThreshold(95, 255); 
 run("Apply LUT");
 rename("Green_Thresholded");
 selectWindow("Green_Thresholded");
