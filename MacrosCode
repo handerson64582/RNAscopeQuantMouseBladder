@@ -128,7 +128,7 @@ run("RGB Color");
 //------------------------------------
 selectWindow("Magenta_Main");
 run("Analyze Particles...",
-  "size=2-25 circularity=0.00-1.00 show=Overlay display include summarize overlay include");
+  "size=2-27 circularity=0.00-1.00 show=Overlay display include summarize overlay include");
   
 selectWindow("Magenta_Main");
 run("Convert to Mask");
@@ -136,7 +136,7 @@ rename("Magenta_Mask");
 
 selectWindow("Magenta_Mask");
 run("Analyze Particles...",
-  "size=2-25 circularity=0.00-1.00 show=Overlay display include summarize overlay include");
+  "size=2-27 circularity=0.00-1.00 show=Overlay display include summarize overlay include");
   
   
 selectWindow("Magenta_Mask");
